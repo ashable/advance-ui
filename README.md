@@ -20,6 +20,12 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 - **CSS**
 - **JavaScript**
 - **Font Awesome** for icons
+- # Student Portal System
+- ## Description
+- This is a simple student portal system that allows students to register and login. Features include:
+- Responsive design for mobile and desktop
+- Show/Hide password functionality
+- Form validation for email and password
 
 <h2>Preview on ipad mini</h2>
 <img src="assets/ipad mini.png" alt="Student Portal ipad mini" width="300">
