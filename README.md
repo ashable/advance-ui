@@ -20,3 +20,9 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 - **CSS**
 - **JavaScript**
 - **Font Awesome** for icons
+
+## Preview on ipad mini
+
+Here is a screenshot of my Student Portal on ipad mini:
+
+![Student Portal ipad mini](assets/ipad mini.png)
