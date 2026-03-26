@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Student Portal System
 
 ## Overview
@@ -24,3 +25,6 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 - **JavaScript**
 - **Font Awesome** for icons
 
+=======
+# advance-ui
+>>>>>>> 5d30fd96ad8bf039de12011f942ce55a2e3dcf84
