@@ -26,7 +26,8 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 - Responsive design for mobile and desktop
 - Show/Hide password functionality
 - Form validation for email and password
-- Sheila 
+  
 
 <h2>Preview on ipad mini</h2>
-<img src="assets/ipad_mini.png" alt="Student Portal ipad mini" width="300">
+<img width="400" height="524" alt="ipad mini" src="https://github.com/user-attachments/assets/d4a025d8-781a-4f25-883b-7ba4bfb27842" />
+
