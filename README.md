@@ -25,4 +25,5 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 
 Here is a screenshot of my Student Portal on ipad mini:
 
-![Student Portal ipad mini](assets/ipad mini.png)
+<link href="ipad mini.PNG rel="stylesheet">
+
