@@ -112,3 +112,126 @@ button:hover {
   cursor: pointer;
   color: #888;
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Use a more modern font stack */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  /* Added a subtle gradient for more depth */
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background: #ffffff;
+  padding: 40px; /* More breathing room */
+  width: 100%;
+  max-width: 400px; /* Better responsiveness */
+  border-radius: 16px; /* Rounder corners for a modern look */
+  /* Softer, layered shadow */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+/* Subtle hover effect for the whole card */
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+  color: #111827;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin-bottom: 24px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1.5px solid #e5e7eb;
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* Highlight input on click */
+input:focus {
+  border-color: #3b82f6;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.password-box i {
+  position: absolute;
+  right: 12px;
+  top: 14px;
+  color: #9ca3af;
+  transition: color 0.2s;
+}
+
+.password-box i:hover {
+  color: #3b82f6;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: scale(0.98); /* Slight click feedback */
+}
+
+.register {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.register a {
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
