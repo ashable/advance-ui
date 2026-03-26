@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGIN FORM -->
+  <div class="card" id="loginCard">
+    <h2>Student Portal System</h2>
+    <p class="subtitle">Login</p>
+
+    <form>
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <div class="password-box">
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="loginPassword"></i>
+      </div>
+
+      <button type="submit">Login</button>
+
+      <p class="register">
+        Don't have an account?
+        <a href="#" onclick="showRegister()">Register here</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- REGISTER FORM -->
+  <div class="card" id="registerCard" style="display:none;">
+    <h2>Student Portal System</h2>
+    <p class="subtitle">Register</p>
+
+    <form>
+      <label>Full Name</label>
+      <input type="text" placeholder="Enter your full name" required>
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <div class="password-box">
+        <input type="password" id="regPassword" placeholder="Create password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="regPassword"></i>
+      </div>
+
+      <label>Confirm Password</label>
+      <div class="password-box">
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="confirmPassword"></i>
+      </div>
+
+      <button type="submit">Register</button>
+
+      <p class="register">
+        Already have an account?
+        <a href="#" onclick="showLogin()">Login</a>
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+  // Toggle password visibility
+  const toggles = document.querySelectorAll(".togglePassword");
+
+  toggles.forEach(icon => {
+    icon.addEventListener("click", function () {
+      const input = document.getElementById(this.dataset.target);
+      const type = input.type === "password" ? "text" : "password";
+      input.type = type;
+
+      this.classList.toggle("fa-eye");
+      this.classList.toggle("fa-eye-slash");
+    });
+  });
+
+  // Switch forms
+  function showRegister() {
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("registerCard").style.display = "block";
+  }
+
+  function showLogin() {
+    document.getElementById("loginCard").style.display = "block";
+    document.getElementById("registerCard").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
