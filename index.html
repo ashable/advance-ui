@@ -10,67 +10,47 @@
 <body>
 
 <div class="container">
-
-  <!-- LOGIN FORM -->
   <div class="card" id="loginCard">
     <h2>Student Portal System</h2>
     <p class="subtitle">Login</p>
-
     <form id="loginForm">
       <label>Email</label>
       <input type="email" id="loginEmail" placeholder="Enter your email" required>
-
       <label>Password</label>
       <div class="password-box">
         <input type="password" id="loginPassword" placeholder="Enter your password" required>
         <i class="fa fa-eye-slash togglePassword" data-target="loginPassword"></i>
       </div>
-
       <button type="submit">Login</button>
       <p id="loginClock"></p>
-
-      <p class="register">
-        Don't have an account?
-        <a href="#" onclick="showRegister()">Register here</a>
-      </p>
+      <p class="register">Don't have an account? <a href="#" onclick="showRegister(); return false;">Register here</a></p>
     </form>
   </div>
 
-  <!-- REGISTER FORM -->
   <div class="card" id="registerCard" style="display:none;">
     <h2>Student Portal System</h2>
     <p class="subtitle">Register</p>
-
     <form id="registerForm">
       <label>Full Name</label>
       <input type="text" id="regName" placeholder="Enter your full name" required>
-
       <label>Email</label>
       <input type="email" id="regEmail" placeholder="Enter your email" required>
-
       <label>Password</label>
       <div class="password-box">
         <input type="password" id="regPassword" placeholder="Create password" required>
         <i class="fa fa-eye-slash togglePassword" data-target="regPassword"></i>
       </div>
       <p id="passwordStrength"></p>
-
       <label>Confirm Password</label>
       <div class="password-box">
         <input type="password" id="confirmPassword" placeholder="Confirm password" required>
         <i class="fa fa-eye-slash togglePassword" data-target="confirmPassword"></i>
       </div>
-
       <button type="submit">Register</button>
-
-      <p class="register">
-        Already have an account?
-        <a href="#" onclick="showLogin()">Login</a>
-      </p>
+      <p class="register">Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a></p>
     </form>
   </div>
 
-  <!-- DASHBOARD AFTER LOGIN -->
   <div class="card" id="dashboardCard" style="display:none;">
     <h2>Welcome to Student Portal</h2>
     <p class="subtitle">Your Dashboard</p>
@@ -78,362 +58,79 @@
     <p id="dashboardClock"></p>
     <button id="logoutBtn">Logout</button>
   </div>
-
 </div>
 
-<!-- JAVASCRIPT -->
 <script>
-  // -------- TOGGLE PASSWORD VISIBILITY --------
-  const toggles = document.querySelectorAll(".togglePassword");
-  toggles.forEach(icon => {
-    icon.addEventListener("click", function () {
-      const input = document.getElementById(this.dataset.target);
-      const type = input.type === "password" ? "text" : "password";
-      input.type = type;
-      this.classList.toggle("fa-eye");
-      this.classList.toggle("fa-eye-slash");
+  function setCard(cardId) {
+    document.getElementById('loginCard').style.display = cardId === 'loginCard' ? 'block' : 'none';
+    document.getElementById('registerCard').style.display = cardId === 'registerCard' ? 'block' : 'none';
+    document.getElementById('dashboardCard').style.display = cardId === 'dashboardCard' ? 'block' : 'none';
+  }
+
+  function showRegister() { setCard('registerCard'); }
+  function showLogin() { setCard('loginCard'); }
+
+  document.querySelectorAll('.togglePassword').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const input = document.getElementById(icon.dataset.target);
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
     });
   });
 
-  // -------- SWITCH FORMS --------
-  function showRegister() {
-    document.getElementById("loginCard").style.display = "none";
-    document.getElementById("registerCard").style.display = "block";
+  const regPasswordInput = document.getElementById('regPassword');
+  const strengthEl = document.getElementById('passwordStrength');
+  if (regPasswordInput && strengthEl) {
+    regPasswordInput.addEventListener('input', () => {
+      const len = regPasswordInput.value.length;
+      strengthEl.innerText = len < 6 ? 'Strength: Weak' : len < 10 ? 'Strength: Medium' : 'Strength: Strong';
+    });
   }
 
-  function showLogin() {
-    document.getElementById("loginCard").style.display = "block";
-    document.getElementById("registerCard").style.display = "none";
-  }
-
-  // -------- PASSWORD STRENGTH --------
-  const regPassword = document.getElementById("regPassword");
-  const strengthEl = document.getElementById("passwordStrength");
-
-  regPassword.addEventListener("input", () => {
-    const val = regPassword.value;
-    if(val.length < 6) strengthEl.innerText = "Strength: Weak";
-    else if(val.length < 10) strengthEl.innerText = "Strength: Medium";
-    else strengthEl.innerText = "Strength: Strong";
-  });
-
-  // -------- CLOCKS --------
   function updateClock(id) {
-    document.getElementById(id).innerText = new Date().toLocaleTimeString();
+    const el = document.getElementById(id);
+    if (el) el.innerText = new Date().toLocaleTimeString();
   }
-  setInterval(() => {
-    updateClock("loginClock");
-    updateClock("dashboardClock");
-  }, 1000);
+  setInterval(() => { updateClock('loginClock'); updateClock('dashboardClock'); }, 1000);
 
-  // -------- LOGIN FORM --------
-  const loginForm = document.getElementById("loginForm");
-  loginForm.addEventListener("submit", (e) => {
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const userName = email.split("@")[0]; // simple name from email
-
-    // simulate successful login
-    document.getElementById("loginCard").style.display = "none";
-    document.getElementById("dashboardCard").style.display = "block";
-
-    // set dynamic greeting
-    setGreeting(userName);
+    const email = document.getElementById('loginEmail').value.trim();
+    const pwd = document.getElementById('loginPassword').value;
+    if (!email || !pwd) { alert('Please enter email and password'); return; }
+    setCard('dashboardCard');
+    setGreeting(email.split('@')[0] || 'Student');
   });
 
-  // -------- DASHBOARD GREETING --------
+  const registerForm = document.getElementById('registerForm');
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    if (!name || !email || !pass || !confirm) { alert('All fields required'); return; }
+    if (pass !== confirm) { alert('Passwords do not match'); return; }
+    alert('Registration successful! Please login.');
+    registerForm.reset();
+    if (strengthEl) strengthEl.innerText = '';
+    showLogin();
+  });
+
   function setGreeting(name) {
-    const greetingEl = document.getElementById("dynamicGreeting");
     const hour = new Date().getHours();
-    let greet = "Hello";
-
-    if(hour < 12) greet = "Good Morning";
-    else if(hour < 18) greet = "Good Afternoon";
-    else greet = "Good Evening";
-
-    greetingEl.innerText = `${greet}, ${name}! Welcome to your dashboard.`;
+    const prefix = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
+    document.getElementById('dynamicGreeting').innerText = `${prefix}, ${name}! Welcome to your dashboard.`;
   }
 
-  // -------- LOGOUT BUTTON --------
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    document.getElementById("dashboardCard").style.display = "none";
-    document.getElementById("loginCard").style.display = "block";
+  document.getElementById('logoutBtn').addEventListener('click', () => {
     loginForm.reset();
+    setCard('loginCard');
   });
-
 </script>
-
-</body>
-  </html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      margin: 0;
-    }
-
-    .navbar {
-      background: #0f172a;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .container {
-      padding: 30px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      background: #0f172a;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1e293b;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <h2>Student Portal</h2>
-    <button onclick="logout()">Logout</button>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="container">
-    <h1>Welcome 🎉</h1>
-    <p id="userDisplay"></p>
-
-    <div class="card">
-      <h3>Profile</h3>
-      <p>Name: Student Name</p>
-      <p>Email: <span id="emailDisplay"></span></p>
-    </div>
-
-    <div class="card">
-      <h3>My Courses</h3>
-      <ul>
-        <li>Web Development</li>
-        <li>UI/UX Design</li>
-        <li>Database Systems</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Announcements</h3>
-      <p>No new announcements.</p>
-    </div>
-  </div>
-
-  <script>
-    // Get user from login (if you stored it)
-    const user = localStorage.getItem("user");
-
-    if (user) {
-      document.getElementById("userDisplay").innerText = "Logged in as: " + user;
-      document.getElementById("emailDisplay").innerText = user;
-    } else {
-      // If not logged in, go back
-      window.location.href = "index.html";
-    }
-
-    function logout() {
-      localStorage.removeItem("user");
-      window.location.href = "index.html";
-    }
-  </script>
 
 </body>
 </html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Portal</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-
-<div class="container">
-
-  <!-- LOGIN FORM -->
-  <div class="card" id="loginCard">
-    <h2>Student Portal System</h2>
-    <p class="subtitle">Login</p>
-
-    <form id="loginForm">
-      <label>Email</label>
-      <input type="email" id="loginEmail" placeholder="Enter your email" required>
-
-      <label>Password</label>
-      <div class="password-box">
-        <input type="password" id="loginPassword" placeholder="Enter your password" required>
-        <i class="fa fa-eye-slash togglePassword" data-target="loginPassword"></i>
-      </div>
-
-      <button type="submit">Login</button>
-      <p id="loginClock"></p>
-
-      <p class="register">
-        Don't have an account?
-        <a href="#" onclick="showRegister()">Register here</a>
-      </p>
-    </form>
-  </div>
-
-  <!-- REGISTER FORM -->
-  <div class="card" id="registerCard" style="display:none;">
-    <h2>Student Portal System</h2>
-    <p class="subtitle">Register</p>
-
-    <form id="registerForm">
-      <label>Full Name</label>
-      <input type="text" id="regName" placeholder="Enter your full name" required>
-
-      <label>Email</label>
-      <input type="email" id="regEmail" placeholder="Enter your email" required>
-
-      <label>Password</label>
-      <div class="password-box">
-        <input type="password" id="regPassword" placeholder="Create password" required>
-        <i class="fa fa-eye-slash togglePassword" data-target="regPassword"></i>
-      </div>
-      <p id="passwordStrength"></p>
-
-      <label>Confirm Password</label>
-      <div class="password-box">
-        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
-        <i class="fa fa-eye-slash togglePassword" data-target="confirmPassword"></i>
-      </div>
-
-      <button type="submit">Register</button>
-
-      <p class="register">
-        Already have an account?
-        <a href="#" onclick="showLogin()">Login</a>
-      </p>
-    </form>
-  </div>
-
-  <!-- DASHBOARD AFTER LOGIN -->
-  <div class="card" id="dashboardCard" style="display:none;">
-    <h2>Welcome to Student Portal</h2>
-    <p class="subtitle">Your Dashboard</p>
-    <p id="dynamicGreeting">Hello, student!</p>
-    <p id="dashboardClock"></p>
-    <button id="logoutBtn">Logout</button>
-  </div>
-
-</div>
-
-<!-- JAVASCRIPT -->
-<script>
-  // -------- TOGGLE PASSWORD VISIBILITY --------
-  const toggles = document.querySelectorAll(".togglePassword");
-  toggles.forEach(icon => {
-    icon.addEventListener("click", function () {
-      const input = document.getElementById(this.dataset.target);
-      const type = input.type === "password" ? "text" : "password";
-      input.type = type;
-      this.classList.toggle("fa-eye");
-      this.classList.toggle("fa-eye-slash");
-    });
-  });
-
-  // -------- SWITCH FORMS --------
-  function showRegister() {
-    document.getElementById("loginCard").style.display = "none";
-    document.getElementById("registerCard").style.display = "block";
-  }
-
-  function showLogin() {
-    document.getElementById("loginCard").style.display = "block";
-    document.getElementById("registerCard").style.display = "none";
-  }
-
-  // -------- PASSWORD STRENGTH --------
-  const regPassword = document.getElementById("regPassword");
-  const strengthEl = document.getElementById("passwordStrength");
-
-  regPassword.addEventListener("input", () => {
-    const val = regPassword.value;
-    if(val.length < 6) strengthEl.innerText = "Strength: Weak";
-    else if(val.length < 10) strengthEl.innerText = "Strength: Medium";
-    else strengthEl.innerText = "Strength: Strong";
-  });
-
-  // -------- CLOCKS --------
-  function updateClock(id) {
-    document.getElementById(id).innerText = new Date().toLocaleTimeString();
-  }
-  setInterval(() => {
-    updateClock("loginClock");
-    updateClock("dashboardClock");
-  }, 1000);
-
-  // -------- LOGIN FORM --------
-  const loginForm = document.getElementById("loginForm");
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const userName = email.split("@")[0]; // simple name from email
-
-    // simulate successful login
-    document.getElementById("loginCard").style.display = "none";
-    document.getElementById("dashboardCard").style.display = "block";
-
-    // set dynamic greeting
-    setGreeting(userName);
-  });
-
-  // -------- DASHBOARD GREETING --------
-  function setGreeting(name) {
-    const greetingEl = document.getElementById("dynamicGreeting");
-    const hour = new Date().getHours();
-    let greet = "Hello";
-
-    if(hour < 12) greet = "Good Morning";
-    else if(hour < 18) greet = "Good Afternoon";
-    else greet = "Good Evening";
-
-    greetingEl.innerText = `${greet}, ${name}! Welcome to your dashboard.`;
-  }
-
-  // -------- LOGOUT BUTTON --------
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    document.getElementById("dashboardCard").style.display = "none";
-    document.getElementById("loginCard").style.display = "block";
-    loginForm.reset();
-  });
-
-</script>
-
-</body>
-  </html>
