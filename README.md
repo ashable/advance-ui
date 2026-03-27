@@ -29,4 +29,4 @@ The project was built as part of **Laboratory 2: Advanced UI Implementation** fo
 - Sheila 
 
 <h2>Preview on ipad mini</h2>
-<img src="assets/ipad mini.png" alt="Student Portal ipad mini" width="300">
+<img src="assets/ipad_mini.png" alt="Student Portal ipad mini" width="300">
