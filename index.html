@@ -165,3 +165,107 @@
 
 </body>
   </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+    }
+
+    .navbar {
+      background: #0f172a;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .container {
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #0f172a;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e293b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h2>Student Portal</h2>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <h1>Welcome 🎉</h1>
+    <p id="userDisplay"></p>
+
+    <div class="card">
+      <h3>Profile</h3>
+      <p>Name: Student Name</p>
+      <p>Email: <span id="emailDisplay"></span></p>
+    </div>
+
+    <div class="card">
+      <h3>My Courses</h3>
+      <ul>
+        <li>Web Development</li>
+        <li>UI/UX Design</li>
+        <li>Database Systems</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Announcements</h3>
+      <p>No new announcements.</p>
+    </div>
+  </div>
+
+  <script>
+    // Get user from login (if you stored it)
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      document.getElementById("userDisplay").innerText = "Logged in as: " + user;
+      document.getElementById("emailDisplay").innerText = user;
+    } else {
+      // If not logged in, go back
+      window.location.href = "index.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
