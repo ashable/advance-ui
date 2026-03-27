@@ -16,9 +16,9 @@
     <h2>Student Portal System</h2>
     <p class="subtitle">Login</p>
 
-    <form>
+    <form id="loginForm">
       <label>Email</label>
-      <input type="email" placeholder="Enter your email" required>
+      <input type="email" id="loginEmail" placeholder="Enter your email" required>
 
       <label>Password</label>
       <div class="password-box">
@@ -68,6 +68,14 @@
     </form>
   </div>
 
+  <!-- DASHBOARD AFTER LOGIN -->
+  <div class="card" id="dashboardCard" style="display:none;">
+    <h2>Welcome to Student Portal</h2>
+    <p class="subtitle">Your Dashboard</p>
+    <p id="welcomeMessage">Hello, student!</p>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
 </div>
 
 <!-- JAVASCRIPT -->
@@ -95,7 +103,28 @@
   function showLogin() {
     document.getElementById("loginCard").style.display = "block";
     document.getElementById("registerCard").style.display = "none";
+    document.getElementById("dashboardCard").style.display = "none";
   }
+
+  function showDashboard(email) {
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("registerCard").style.display = "none";
+    document.getElementById("dashboardCard").style.display = "block";
+    document.getElementById("welcomeMessage").textContent = "Hello, " + email + "! You are logged in.";
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    if (email) {
+      showDashboard(email);
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", function () {
+    document.getElementById("loginForm").reset();
+    showLogin();
+  });
 </script>
 
 </body>
