@@ -101,8 +101,9 @@
     const email = document.getElementById('loginEmail').value.trim();
     const pwd = document.getElementById('loginPassword').value;
     if (!email || !pwd) { alert('Please enter email and password'); return; }
-    setCard('dashboardCard');
-    setGreeting(email.split('@')[0] || 'Student');
+    const name = email.split('@')[0] || 'Student';
+    localStorage.setItem('loggedInUser', name);
+    window.location.href = 'dashboard.html';
   });
 
   const registerForm = document.getElementById('registerForm');

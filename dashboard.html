@@ -59,6 +59,7 @@
   <div class="container">
     <h1>Welcome 🎉</h1>
     <p id="userDisplay"></p>
+    <p id="clockDisplay"></p>
 
     <div class="card">
       <h3>Profile</h3>
@@ -82,19 +83,33 @@
   </div>
 
   <script>
-    // Get user from login (if you stored it)
-    const user = localStorage.getItem("user");
+    // Get user from login
+    const user = localStorage.getItem("loggedInUser");
 
     if (user) {
       document.getElementById("userDisplay").innerText = "Logged in as: " + user;
-      document.getElementById("emailDisplay").innerText = user;
+      document.getElementById("emailDisplay").innerText = user + "@example.com"; // Assuming email
+      setGreeting(user);
     } else {
       // If not logged in, go back
       window.location.href = "index.html";
     }
 
+    function setGreeting(name) {
+      const hour = new Date().getHours();
+      const prefix = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
+      document.getElementById('userDisplay').innerText = `${prefix}, ${name}! Welcome to your dashboard.`;
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clockDisplay').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
     function logout() {
-      localStorage.removeItem("user");
+      localStorage.removeItem("loggedInUser");
       window.location.href = "index.html";
     }
   </script>
