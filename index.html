@@ -269,3 +269,171 @@
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGIN FORM -->
+  <div class="card" id="loginCard">
+    <h2>Student Portal System</h2>
+    <p class="subtitle">Login</p>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <div class="password-box">
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="loginPassword"></i>
+      </div>
+
+      <button type="submit">Login</button>
+      <p id="loginClock"></p>
+
+      <p class="register">
+        Don't have an account?
+        <a href="#" onclick="showRegister()">Register here</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- REGISTER FORM -->
+  <div class="card" id="registerCard" style="display:none;">
+    <h2>Student Portal System</h2>
+    <p class="subtitle">Register</p>
+
+    <form id="registerForm">
+      <label>Full Name</label>
+      <input type="text" id="regName" placeholder="Enter your full name" required>
+
+      <label>Email</label>
+      <input type="email" id="regEmail" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <div class="password-box">
+        <input type="password" id="regPassword" placeholder="Create password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="regPassword"></i>
+      </div>
+      <p id="passwordStrength"></p>
+
+      <label>Confirm Password</label>
+      <div class="password-box">
+        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+        <i class="fa fa-eye-slash togglePassword" data-target="confirmPassword"></i>
+      </div>
+
+      <button type="submit">Register</button>
+
+      <p class="register">
+        Already have an account?
+        <a href="#" onclick="showLogin()">Login</a>
+      </p>
+    </form>
+  </div>
+
+  <!-- DASHBOARD AFTER LOGIN -->
+  <div class="card" id="dashboardCard" style="display:none;">
+    <h2>Welcome to Student Portal</h2>
+    <p class="subtitle">Your Dashboard</p>
+    <p id="dynamicGreeting">Hello, student!</p>
+    <p id="dashboardClock"></p>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+  // -------- TOGGLE PASSWORD VISIBILITY --------
+  const toggles = document.querySelectorAll(".togglePassword");
+  toggles.forEach(icon => {
+    icon.addEventListener("click", function () {
+      const input = document.getElementById(this.dataset.target);
+      const type = input.type === "password" ? "text" : "password";
+      input.type = type;
+      this.classList.toggle("fa-eye");
+      this.classList.toggle("fa-eye-slash");
+    });
+  });
+
+  // -------- SWITCH FORMS --------
+  function showRegister() {
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("registerCard").style.display = "block";
+  }
+
+  function showLogin() {
+    document.getElementById("loginCard").style.display = "block";
+    document.getElementById("registerCard").style.display = "none";
+  }
+
+  // -------- PASSWORD STRENGTH --------
+  const regPassword = document.getElementById("regPassword");
+  const strengthEl = document.getElementById("passwordStrength");
+
+  regPassword.addEventListener("input", () => {
+    const val = regPassword.value;
+    if(val.length < 6) strengthEl.innerText = "Strength: Weak";
+    else if(val.length < 10) strengthEl.innerText = "Strength: Medium";
+    else strengthEl.innerText = "Strength: Strong";
+  });
+
+  // -------- CLOCKS --------
+  function updateClock(id) {
+    document.getElementById(id).innerText = new Date().toLocaleTimeString();
+  }
+  setInterval(() => {
+    updateClock("loginClock");
+    updateClock("dashboardClock");
+  }, 1000);
+
+  // -------- LOGIN FORM --------
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value;
+    const userName = email.split("@")[0]; // simple name from email
+
+    // simulate successful login
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("dashboardCard").style.display = "block";
+
+    // set dynamic greeting
+    setGreeting(userName);
+  });
+
+  // -------- DASHBOARD GREETING --------
+  function setGreeting(name) {
+    const greetingEl = document.getElementById("dynamicGreeting");
+    const hour = new Date().getHours();
+    let greet = "Hello";
+
+    if(hour < 12) greet = "Good Morning";
+    else if(hour < 18) greet = "Good Afternoon";
+    else greet = "Good Evening";
+
+    greetingEl.innerText = `${greet}, ${name}! Welcome to your dashboard.`;
+  }
+
+  // -------- LOGOUT BUTTON --------
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    document.getElementById("dashboardCard").style.display = "none";
+    document.getElementById("loginCard").style.display = "block";
+    loginForm.reset();
+  });
+
+</script>
+
+</body>
+  </html>
